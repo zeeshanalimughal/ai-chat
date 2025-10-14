@@ -30,20 +30,20 @@ export default function ChatInterface({
   const pendingFilesRef = useRef<FileAttachment[]>([]);
   const pendingImagesRef = useRef<string[]>([]);
 
-  // Create transport - refs are always read dynamically, so no need to recreate
+  // Create transport that reads model dynamically
   const transport = useMemo(() => {
+    console.log('Creating transport with model:', selectedModel.id, selectedModel.provider);
+    
     return new DefaultChatTransport({
       api: "/api/chat",
-      body: {
-        model: selectedModel.id,
-        provider: selectedModel.provider,
-      },
-      prepareSendMessagesRequest: ({ messages, body }) => {
-        // This function reads the ref values at call time, not creation time
+      prepareSendMessagesRequest: ({ messages }) => {
+        // Read current values at call time
         const currentFiles = pendingFilesRef.current;
         const currentImages = pendingImagesRef.current;
         
         console.log('=== PREPARE SEND REQUEST ===');
+        console.log('Model being sent:', selectedModel.id);
+        console.log('Provider being sent:', selectedModel.provider);
         console.log('currentFiles:', currentFiles);
         console.log('currentFiles length:', currentFiles.length);
         console.log('currentImages:', currentImages);
@@ -70,8 +70,8 @@ export default function ChatInterface({
         return {
           body: {
             messages: formattedMessages,
-            model: body?.model,
-            provider: body?.provider,
+            model: selectedModel.id,
+            provider: selectedModel.provider,
             files: currentFiles,
           },
           headers: {

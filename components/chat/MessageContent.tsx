@@ -92,18 +92,19 @@ export default function MessageContent({ content, images, files, isUser = false 
       {/* Text Content */}
       <div className={cn(
         "markdown prose prose-sm max-w-none break-words",
-        "prose-p:my-3 prose-p:leading-7",
+        "text-sm sm:text-base", // Smaller font on mobile
+        "prose-p:my-2 sm:prose-p:my-3 prose-p:leading-6 sm:prose-p:leading-7",
         "prose-headings:font-semibold prose-headings:tracking-tight",
-        "prose-h1:text-2xl prose-h1:mt-8 prose-h1:mb-4",
-        "prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4",
-        "prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3",
-        "prose-ul:my-4 prose-ul:space-y-2",
-        "prose-ol:my-4 prose-ol:space-y-2",
-        "prose-li:my-1 prose-li:leading-7",
-        "prose-blockquote:my-4 prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic",
-        "prose-img:my-4 prose-img:rounded-lg",
-        "prose-hr:my-8",
-        "prose-table:my-4",
+        "prose-h1:text-xl sm:prose-h1:text-2xl prose-h1:mt-6 sm:prose-h1:mt-8 prose-h1:mb-3 sm:prose-h1:mb-4",
+        "prose-h2:text-lg sm:prose-h2:text-xl prose-h2:mt-6 sm:prose-h2:mt-8 prose-h2:mb-3 sm:prose-h2:mb-4",
+        "prose-h3:text-base sm:prose-h3:text-lg prose-h3:mt-4 sm:prose-h3:mt-6 prose-h3:mb-2 sm:prose-h3:mb-3",
+        "prose-ul:my-3 sm:prose-ul:my-4 prose-ul:space-y-1 sm:prose-ul:space-y-2",
+        "prose-ol:my-3 sm:prose-ol:my-4 prose-ol:space-y-1 sm:prose-ol:space-y-2",
+        "prose-li:my-0.5 sm:prose-li:my-1 prose-li:leading-6 sm:prose-li:leading-7",
+        "prose-blockquote:my-3 sm:prose-blockquote:my-4 prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-blockquote:italic",
+        "prose-img:my-3 sm:prose-img:my-4 prose-img:rounded-lg",
+        "prose-hr:my-6 sm:prose-hr:my-8",
+        "prose-table:my-3 sm:prose-table:my-4",
         "prose-strong:font-semibold",
         isUser 
           ? "prose-invert prose-a:text-white prose-a:underline"

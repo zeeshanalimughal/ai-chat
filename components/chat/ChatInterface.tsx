@@ -231,38 +231,41 @@ export default function ChatInterface({
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-b from-background to-muted/20 relative">
+      {/* Mobile header with menu button space */}
+      <div className="lg:hidden h-16 flex-shrink-0" />
+      
       <div className="absolute top-4 right-4 z-10">
         <ThemeToggle />
       </div>
 
-      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto scrollbar-thin">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto scrollbar-thin px-2 sm:px-4">
         {chatMessages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full px-4 py-8">
             <div className="text-center max-w-3xl mb-8">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <Sparkles className="w-10 h-10 text-white" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
               </div>
-              <h1 className="text-4xl font-bold mb-3">Welcome to AI Chat</h1>
-              <p className="text-lg text-muted-foreground mb-8">
+              <h1 className="text-2xl sm:text-4xl font-bold mb-3">Welcome to AI Chat</h1>
+              <p className="text-base sm:text-lg text-muted-foreground mb-8">
                 Start a conversation with powerful AI models
               </p>
             </div>
             
             {/* Example Prompts */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-3xl w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-4xl w-full px-2">
               {examplePrompts.map((example, index) => (
                 <button
                   key={index}
                   onClick={() => handleSendMessage(example.prompt)}
-                  className="group p-4 rounded-xl border border-border bg-card hover:bg-muted/50 hover:border-blue-500/50 transition-all duration-200 text-left"
+                  className="group p-3 sm:p-4 rounded-xl border border-border bg-card hover:bg-muted/50 hover:border-blue-500/50 transition-all duration-200 text-left"
                 >
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl">{example.icon}</span>
-                    <div className="flex-1">
+                    <span className="text-xl sm:text-2xl">{example.icon}</span>
+                    <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-sm mb-1 group-hover:text-blue-600 transition-colors">
                         {example.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
+                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
                         {example.prompt}
                       </p>
                     </div>
@@ -272,7 +275,7 @@ export default function ChatInterface({
             </div>
           </div>
         ) : (
-          <div className="max-w-5xl mx-auto w-full pt-10">
+          <div className="max-w-5xl mx-auto w-full pt-4 sm:pt-10 pb-4">
             {chatMessages.map((message) => {
               const textParts = message.parts.filter((p: any) => p.type === "text");
               const content = textParts.map((p: any) => p.text).join("");

@@ -231,22 +231,19 @@ export default function ChatInterface({
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-b from-background to-muted/20 relative">
-      {/* Mobile header with menu button space */}
-      <div className="lg:hidden h-16 flex-shrink-0" />
-      
       <div className="absolute top-4 right-4 z-10">
         <ThemeToggle />
       </div>
 
-      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto scrollbar-thin px-2 sm:px-4">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto scrollbar-thin px-2 sm:px-4 pt-16 lg:pt-0">
         {chatMessages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full px-4 py-8">
-            <div className="text-center max-w-3xl mb-8">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+          <div className="flex flex-col items-center justify-center min-h-full px-4 py-4 sm:py-8">
+            <div className="text-center max-w-3xl mb-4 sm:mb-6">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                 <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
               </div>
-              <h1 className="text-2xl sm:text-4xl font-bold mb-3">Welcome to ArcChat</h1>
-              <p className="text-base sm:text-lg text-muted-foreground mb-8">
+              <h1 className="text-2xl sm:text-4xl font-bold mb-2 sm:mb-3">Welcome to ArcChat</h1>
+              <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6">
                 Start a conversation with powerful AI models
               </p>
             </div>

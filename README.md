@@ -1,4 +1,4 @@
-# AI Chat
+# ArcChat
 
 A modern, full-featured AI chat application built with Next.js 15, supporting multiple AI models (OpenAI, Google Gemini), streaming responses, image generation, and file attachments.
 

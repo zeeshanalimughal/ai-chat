@@ -245,7 +245,7 @@ export default function ChatInterface({
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
                 <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
               </div>
-              <h1 className="text-2xl sm:text-4xl font-bold mb-3">Welcome to AI Chat</h1>
+              <h1 className="text-2xl sm:text-4xl font-bold mb-3">Welcome to ArcChat</h1>
               <p className="text-base sm:text-lg text-muted-foreground mb-8">
                 Start a conversation with powerful AI models
               </p>

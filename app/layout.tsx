@@ -7,7 +7,7 @@ import { ModelProvider } from "@/contexts/ModelContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Chat - ChatGPT Clone",
+  title: "ArcChat - ChatGPT Clone",
   description: "A modern AI chat application supporting multiple models including GPT-4o and Gemini",
 };
 

@@ -1,11 +1,12 @@
 'use client';
 
-import { Chat, AIModel, AI_MODELS } from '@/lib/types';
+import { Chat, AI_MODELS } from '@/lib/types';
 import { Plus, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Dropdown } from '@/components/ui/Dropdown';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import ChatItem from './ChatItem';
+import { useModel } from '@/contexts/ModelContext';
 
 interface SidebarProps {
   chats: Chat[];
@@ -13,8 +14,6 @@ interface SidebarProps {
   onNewChat: () => void;
   onSelectChat: (chat: Chat) => void;
   onDeleteChat: (id: string) => void;
-  selectedModel: AIModel;
-  onModelChange: (model: AIModel) => void;
 }
 
 export default function Sidebar({
@@ -23,9 +22,9 @@ export default function Sidebar({
   onNewChat,
   onSelectChat,
   onDeleteChat,
-  selectedModel,
-  onModelChange,
 }: SidebarProps) {
+  const { selectedModel, setSelectedModel } = useModel();
+  
   // Group models by provider for dropdown
   const modelOptions = AI_MODELS.map(model => ({
     value: model.id,
@@ -36,7 +35,7 @@ export default function Sidebar({
   const handleModelChange = (modelId: string) => {
     const model = AI_MODELS.find(m => m.id === modelId);
     if (model) {
-      onModelChange(model);
+      setSelectedModel(model);
     }
   };
 

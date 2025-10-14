@@ -3,26 +3,26 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { Chat, AIModel, Message, FileAttachment } from "@/lib/types";
+import { Chat, Message, FileAttachment } from "@/lib/types";
 import { generateId, generateChatTitle } from "@/lib/utils";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import { Sparkles } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useModel } from "@/contexts/ModelContext";
 
 interface ChatInterfaceProps {
   chat: Chat | null;
-  selectedModel: AIModel;
   onUpdateChat: (chat: Chat) => void;
   onNewChat: () => void;
 }
 
 export default function ChatInterface({
   chat,
-  selectedModel,
   onUpdateChat,
   onNewChat,
 }: ChatInterfaceProps) {
+  const { selectedModel } = useModel();
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [pendingImages, setPendingImages] = useState<string[]>([]);

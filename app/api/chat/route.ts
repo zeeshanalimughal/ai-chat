@@ -85,8 +85,20 @@ export async function POST(req: NextRequest) {
     // Select the appropriate model
     let selectedModel;
     if (provider === 'openai') {
+      if (!process.env.OPENAI_API_KEY) {
+        return Response.json(
+          { error: 'OpenAI API key is not configured. Please add OPENAI_API_KEY to your environment variables.' },
+          { status: 500 }
+        );
+      }
       selectedModel = openai(model);
     } else if (provider === 'google') {
+      if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+        return Response.json(
+          { error: 'Google API key is not configured. Please add GOOGLE_GENERATIVE_AI_API_KEY to your environment variables.' },
+          { status: 500 }
+        );
+      }
       selectedModel = google(model);
     } else {
       return Response.json(
@@ -157,11 +169,15 @@ export async function POST(req: NextRequest) {
     });
 
     console.log('Streaming with model:', model, 'Messages with images:', messages.some((m: any) => m.images), 'Files:', files.length);
+    console.log('Formatted messages:', JSON.stringify(formattedMessages, null, 2));
 
     // Use streamText - simple approach from docs
     const result = streamText({
       model: selectedModel,
       messages: formattedMessages,
+      onChunk: ({ chunk }) => {
+        console.log('Chunk received:', chunk);
+      },
     });
 
     return result.toUIMessageStreamResponse();

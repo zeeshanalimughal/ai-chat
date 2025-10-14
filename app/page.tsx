@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Chat, AIModel, AI_MODELS } from '@/lib/types';
-import { generateId } from '@/lib/utils';
+import { Chat } from '@/lib/types';
 import { getChats, saveChat, deleteChat, getSettings, saveSettings } from '@/lib/storage';
 import Sidebar from '@/components/sidebar/Sidebar';
 import ChatInterface from '@/components/chat/ChatInterface';
@@ -11,12 +10,10 @@ import { Menu } from 'lucide-react';
 export default function Home() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
-  // Default to Gemini 2.0 Flash (index 2 in the array)
-  const [selectedModel, setSelectedModel] = useState<AIModel>(AI_MODELS[2]);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mounted, setMounted] = useState(false);
 
-  // Load chats and settings on mount
+  // Load chats on mount
   useEffect(() => {
     setMounted(true);
     const loadedChats = getChats();
@@ -31,12 +28,6 @@ export default function Home() {
         setCurrentChat(chat);
       }
     }
-
-    // Load current model
-    const model = AI_MODELS.find(m => m.id === settings.currentModel);
-    if (model) {
-      setSelectedModel(model);
-    }
   }, []);
 
   // Save current chat ID when it changes
@@ -46,18 +37,6 @@ export default function Home() {
       saveSettings({ ...settings, currentChatId: currentChat.id });
     }
   }, [currentChat, mounted]);
-
-  // Save current model when it changes
-  useEffect(() => {
-    if (mounted) {
-      const settings = getSettings();
-      saveSettings({
-        ...settings,
-        currentModel: selectedModel.id,
-        currentProvider: selectedModel.provider,
-      });
-    }
-  }, [selectedModel, mounted]);
 
   const handleNewChat = () => {
     // Don't create empty chats - just clear current chat to show welcome screen
@@ -123,8 +102,6 @@ export default function Home() {
           onNewChat={handleNewChat}
           onSelectChat={handleSelectChat}
           onDeleteChat={handleDeleteChat}
-          selectedModel={selectedModel}
-          onModelChange={setSelectedModel}
         />
       </div>
 
@@ -140,7 +117,6 @@ export default function Home() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <ChatInterface
           chat={currentChat}
-          selectedModel={selectedModel}
           onUpdateChat={handleUpdateChat}
           onNewChat={handleNewChat}
         />

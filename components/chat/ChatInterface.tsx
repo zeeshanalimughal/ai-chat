@@ -25,6 +25,8 @@ export default function ChatInterface({
   const { selectedModel } = useModel();
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [pendingImages, setPendingImages] = useState<string[]>([]);
   const [pendingFiles, setPendingFiles] = useState<FileAttachment[]>([]);
   const pendingFilesRef = useRef<FileAttachment[]>([]);
@@ -144,13 +146,33 @@ export default function ChatInterface({
     }
   }, [chatMessages, isLoading]);
 
-  // Auto-scroll
+  // Detect if user is near bottom of scroll
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages]);
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+      setIsUserScrolling(!isNearBottom);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Auto-scroll only if user is at bottom
+  useEffect(() => {
+    if (!isUserScrolling) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chatMessages, isUserScrolling]);
 
   const handleSendMessage = async (content: string, images?: string[], files?: FileAttachment[]) => {
     setError(null);
+    
+    // Reset scroll state when sending a new message
+    setIsUserScrolling(false);
     
     // Store images and files in both state and ref
     const imagesToSend = images || [];
@@ -213,7 +235,7 @@ export default function ChatInterface({
         <ThemeToggle />
       </div>
 
-      <div className="flex-1 overflow-y-auto scrollbar-thin">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto scrollbar-thin">
         {chatMessages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full px-4 py-8">
             <div className="text-center max-w-3xl mb-8">
